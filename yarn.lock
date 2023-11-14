@@ -379,6 +379,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lamdera/compiler-darwin-arm64@npm:0.19.1-1.2.1":
+  version: 0.19.1-1.2.1
+  resolution: "@lamdera/compiler-darwin-arm64@npm:0.19.1-1.2.1"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@lamdera/compiler-darwin-x64@npm:0.19.1-1.2.1":
+  version: 0.19.1-1.2.1
+  resolution: "@lamdera/compiler-darwin-x64@npm:0.19.1-1.2.1"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@lamdera/compiler-linux-arm64@npm:0.19.1-1.2.1":
+  version: 0.19.1-1.2.1
+  resolution: "@lamdera/compiler-linux-arm64@npm:0.19.1-1.2.1"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@lamdera/compiler-linux-x64@npm:0.19.1-1.2.1":
+  version: 0.19.1-1.2.1
+  resolution: "@lamdera/compiler-linux-x64@npm:0.19.1-1.2.1"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@lamdera/compiler-win32-x64@npm:0.19.1-1.2.1":
+  version: 0.19.1-1.2.1
+  resolution: "@lamdera/compiler-win32-x64@npm:0.19.1-1.2.1"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -1431,6 +1466,7 @@ __metadata:
     elm-pages: "npm:^3.0.3"
     elm-review: "npm:^2.10.3"
     elm-tooling: "npm:^1.14.0"
+    lamdera: "npm:^0.19.1-1.2.1-1"
     vite: "npm:^4.3.5"
   languageName: unknown
   linkType: soft
@@ -2637,6 +2673,32 @@ __metadata:
   version: 4.1.5
   resolution: "kleur@npm:4.1.5"
   checksum: e9de6cb49657b6fa70ba2d1448fd3d691a5c4370d8f7bbf1c2f64c24d461270f2117e1b0afe8cb3114f13bbd8e51de158c2a224953960331904e636a5e4c0f2a
+  languageName: node
+  linkType: hard
+
+"lamdera@npm:^0.19.1-1.2.1-1":
+  version: 0.19.1-1.2.1-1
+  resolution: "lamdera@npm:0.19.1-1.2.1-1"
+  dependencies:
+    "@lamdera/compiler-darwin-arm64": "npm:0.19.1-1.2.1"
+    "@lamdera/compiler-darwin-x64": "npm:0.19.1-1.2.1"
+    "@lamdera/compiler-linux-arm64": "npm:0.19.1-1.2.1"
+    "@lamdera/compiler-linux-x64": "npm:0.19.1-1.2.1"
+    "@lamdera/compiler-win32-x64": "npm:0.19.1-1.2.1"
+  dependenciesMeta:
+    "@lamdera/compiler-darwin-arm64":
+      optional: true
+    "@lamdera/compiler-darwin-x64":
+      optional: true
+    "@lamdera/compiler-linux-arm64":
+      optional: true
+    "@lamdera/compiler-linux-x64":
+      optional: true
+    "@lamdera/compiler-win32-x64":
+      optional: true
+  bin:
+    lamdera: bin/lamdera
+  checksum: cf278c3ee986b7334bb59701c17aa51a1ae8fd6030e3057ad2531bc20519b0d1dc5336f7afa7133ce939e79f71bcd4024ae1bb05c87305e5578d28f1e45b3873
   languageName: node
   linkType: hard
 
