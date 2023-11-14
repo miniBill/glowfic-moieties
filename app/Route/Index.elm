@@ -307,7 +307,7 @@ viewSegment distance ( angle, list ) =
             )
     in
     list
-        |> List.sortBy (\( { lightness }, _ ) -> lightness)
+        |> List.sortBy (\( { lightness, hue }, _ ) -> lightness + hue)
         |> List.indexedMap
             (\i ( moiety, usernames ) ->
                 let
