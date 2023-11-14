@@ -1,4 +1,4 @@
-module Route.Index exposing (ActionData, Data, Model, Msg, route)
+module Route.Index exposing (ActionData, Data, Hsla, Model, Msg, RouteParams, route)
 
 import AssocList
 import BackendTask exposing (BackendTask)
@@ -17,7 +17,6 @@ import LowLevel.Command
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import Path
-import Route
 import RouteBuilder exposing (App, StatelessRoute)
 import Segment
 import Shared
@@ -232,38 +231,17 @@ view app _ =
                         distance : Float
                         distance =
                             toDistance segmentMoiety
-
-                        outerDistance =
-                            distance
-
-                        innerDistance =
-                            distance - r / 2
-
-                        angle : Float
-                        angle =
-                            toAngle segmentMoiety
-
-                        fromPolar ( alpha, dist ) =
-                            ( dist * cos alpha
-                            , dist * sin alpha
-                            )
-
-                        span : Float
-                        span =
-                            2 * pi / angleCount / segmentSplit
-
-                        segmentSplit : Float
-                        segmentSplit =
-                            1 + toFloat (List.length rest)
                     in
                     if distance == 0 then
                         (first :: rest)
                             |> List.map
                                 (\( moiety, usernames ) ->
                                     let
+                                        rectHeight : Float
                                         rectHeight =
                                             2 / ringCount
 
+                                        borderWidth : Float
                                         borderWidth =
                                             r / 20
                                     in
@@ -280,6 +258,33 @@ view app _ =
                                 )
 
                     else
+                        let
+                            outerDistance : Float
+                            outerDistance =
+                                distance
+
+                            innerDistance : Float
+                            innerDistance =
+                                distance - r / 2
+
+                            angle : Float
+                            angle =
+                                toAngle segmentMoiety
+
+                            segmentSplit : Float
+                            segmentSplit =
+                                1 + toFloat (List.length rest)
+
+                            span : Float
+                            span =
+                                2 * pi / angleCount / segmentSplit
+
+                            fromPolar : ( Float, Float ) -> ( Float, Float )
+                            fromPolar ( alpha, dist ) =
+                                ( dist * cos alpha
+                                , dist * sin alpha
+                                )
+                        in
                         (first :: rest)
                             |> List.sortBy (\( { lightness }, _ ) -> lightness)
                             |> List.indexedMap
