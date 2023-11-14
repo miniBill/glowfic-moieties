@@ -24,6 +24,7 @@ import SubPath
 import TypedSvg as S
 import TypedSvg.Attributes as SA
 import TypedSvg.Attributes.InPx as SAPx
+import TypedSvg.Core exposing (Svg)
 import TypedSvg.Types exposing (Paint(..))
 import UrlPath
 import View exposing (View)
@@ -197,150 +198,63 @@ head _ =
         |> Seo.website
 
 
+segmentHeight : Float
+segmentHeight =
+    2 / ringCount
+
+
+ringCount : number
+ringCount =
+    8
+
+
+angleCount : number
+angleCount =
+    12
+
+
+rectCount : Float
+rectCount =
+    ringCount
+
+
+rectHeight : Float
+rectHeight =
+    2 / rectCount
+
+
+borderWidth : Float
+borderWidth =
+    1 / 400
+
+
 view :
     App Data ActionData RouteParams
     -> Shared.Model
     -> View (PagesMsg Msg)
 view app _ =
-    let
-        r : Float
-        r =
-            2 / ringCount
-
-        toDistance : Hsla -> Float
-        toDistance moiety =
-            quantize ringCount moiety.saturation
-
-        toAngle : Hsla -> Float
-        toAngle moiety =
-            2 * pi * quantize angleCount moiety.hue
-    in
     { title = "Moieties"
     , body =
         [ app.data.moieties
             |> AssocList.toList
-            |> List.Extra.gatherEqualsBy
-                (\( moiety, _ ) ->
-                    ( toDistance moiety
-                    , toAngle moiety
-                    )
-                )
-            |> List.concatMap
-                (\( ( segmentMoiety, _ ) as first, rest ) ->
-                    let
-                        distance : Float
-                        distance =
-                            toDistance segmentMoiety
-                    in
-                    if distance == 0 then
-                        (first :: rest)
-                            |> List.map
-                                (\( moiety, usernames ) ->
-                                    let
-                                        rectHeight : Float
-                                        rectHeight =
-                                            2 / ringCount
+            |> gatherEqualsBy (\( moiety, _ ) -> toDistance moiety)
+            |> List.sortBy Tuple.first
+            |> List.map
+                (\( distance, ring ) ->
+                    ring
+                        |> gatherEqualsBy (\( moiety, _ ) -> toAngle moiety)
+                        |> List.sortBy Tuple.first
+                        |> List.map
+                            (if distance == 0 then
+                                viewGrayscale
 
-                                        borderWidth : Float
-                                        borderWidth =
-                                            r / 20
-                                    in
-                                    S.rect
-                                        [ SAPx.x <| 1 + r / 6
-                                        , SAPx.y <| (2 - rectHeight - 2 * borderWidth) * quantize (ringCount - 1) moiety.lightness - 1 + r / 20
-                                        , SAPx.width <| r - r / 6 - borderWidth
-                                        , SAPx.height rectHeight
-                                        , SA.fill <| Paint <| Color.fromHsla moiety
-                                        , SA.stroke <| Paint Color.black
-                                        , SAPx.strokeWidth borderWidth
-                                        ]
-                                        [ S.title [] [ Html.text <| String.join ", " usernames ] ]
-                                )
-
-                    else
-                        let
-                            outerDistance : Float
-                            outerDistance =
-                                distance
-
-                            innerDistance : Float
-                            innerDistance =
-                                distance - r / 2
-
-                            angle : Float
-                            angle =
-                                toAngle segmentMoiety
-
-                            segmentSplit : Float
-                            segmentSplit =
-                                1 + toFloat (List.length rest)
-
-                            span : Float
-                            span =
-                                2 * pi / angleCount / segmentSplit
-
-                            fromPolar : ( Float, Float ) -> ( Float, Float )
-                            fromPolar ( alpha, dist ) =
-                                ( dist * cos alpha
-                                , dist * sin alpha
-                                )
-                        in
-                        (first :: rest)
-                            |> List.sortBy (\( { lightness }, _ ) -> lightness)
-                            |> List.indexedMap
-                                (\i ( moiety, usernames ) ->
-                                    let
-                                        fi : Float
-                                        fi =
-                                            toFloat i
-
-                                        outerBefore : ( Float, Float )
-                                        outerBefore =
-                                            fromPolar ( angle + span * fi, outerDistance )
-
-                                        outerAfter : ( Float, Float )
-                                        outerAfter =
-                                            fromPolar ( angle + span * (fi + 1), outerDistance )
-
-                                        innerAfter : ( Float, Float )
-                                        innerAfter =
-                                            fromPolar ( angle + span * (fi + 1), innerDistance )
-
-                                        innerBefore : ( Float, Float )
-                                        innerBefore =
-                                            fromPolar ( angle + span * fi, innerDistance )
-                                    in
-                                    S.path
-                                        [ SA.d <|
-                                            Path.toString
-                                                [ SubPath.fromSegments
-                                                    [ Segment.ellipticalArc outerBefore
-                                                        { target = outerAfter
-                                                        , radii = ( outerDistance, outerDistance )
-                                                        , xAxisRotate = 0
-                                                        , arcFlag = LowLevel.Command.largestArc
-                                                        , direction = LowLevel.Command.clockwise
-                                                        }
-                                                    ]
-                                                    |> SubPath.connect
-                                                        (SubPath.fromSegments
-                                                            [ Segment.ellipticalArc innerAfter
-                                                                { target = innerBefore
-                                                                , radii = ( innerDistance, innerDistance )
-                                                                , xAxisRotate = 0
-                                                                , arcFlag = LowLevel.Command.largestArc
-                                                                , direction = LowLevel.Command.counterClockwise
-                                                                }
-                                                            ]
-                                                        )
-                                                ]
-                                        , SA.fill <| Paint <| Color.fromHsla moiety
-                                        ]
-                                        [ S.title [] [ Html.text <| String.join ", " usernames ] ]
-                                )
+                             else
+                                viewSegment distance
+                            )
+                        |> S.g [ SA.id <| "ring-" ++ String.fromFloat distance ]
                 )
             |> S.svg
-                [ SA.viewBox -1 -1 (2 + r) 2
+                [ SA.viewBox -1 -1 (2 + segmentHeight / 2) 2
                 , Html.Attributes.style "width" "calc(100vw - 16px)"
                 , Html.Attributes.style "height" "calc(100vh - 16px)"
                 ]
@@ -348,9 +262,120 @@ view app _ =
     }
 
 
-ringCount : number
-ringCount =
-    10
+viewGrayscale : ( Float, List ( Hsla, List String ) ) -> Svg (PagesMsg Msg)
+viewGrayscale ( _, list ) =
+    list
+        |> List.map
+            (\( moiety, usernames ) ->
+                S.rect
+                    [ SAPx.x <| 1 + segmentHeight / 6
+                    , SAPx.y <| (2 - rectHeight - 2 * borderWidth) * quantize (rectCount - 1) moiety.lightness - 1 + segmentHeight / 20
+                    , SAPx.width <| segmentHeight / 2 - segmentHeight / 6 - borderWidth
+                    , SAPx.height rectHeight
+                    , SA.fill <| Paint <| Color.fromHsla moiety
+                    , SA.stroke <| Paint Color.black
+                    , SAPx.strokeWidth borderWidth
+                    ]
+                    [ S.title [] [ Html.text <| String.join ", " usernames ] ]
+            )
+        |> S.g [ SA.id "grayscale" ]
+
+
+viewSegment : Float -> ( Float, List ( Hsla, List String ) ) -> Svg (PagesMsg Msg)
+viewSegment distance ( angle, list ) =
+    let
+        outerDistance : Float
+        outerDistance =
+            distance
+
+        innerDistance : Float
+        innerDistance =
+            outerDistance - segmentHeight / 2
+
+        fragmentCount : Float
+        fragmentCount =
+            toFloat (List.length list)
+
+        fragmentAngle : Float
+        fragmentAngle =
+            2 * pi / angleCount / fragmentCount
+
+        fromPolar : ( Float, Float ) -> ( Float, Float )
+        fromPolar ( alpha, dist ) =
+            ( dist * cos alpha
+            , dist * sin alpha
+            )
+    in
+    list
+        |> List.sortBy (\( { lightness }, _ ) -> lightness)
+        |> List.indexedMap
+            (\i ( moiety, usernames ) ->
+                let
+                    fi : Float
+                    fi =
+                        toFloat i
+
+                    outerBefore : ( Float, Float )
+                    outerBefore =
+                        fromPolar ( angle + fragmentAngle * fi, outerDistance )
+
+                    outerAfter : ( Float, Float )
+                    outerAfter =
+                        fromPolar ( angle + fragmentAngle * (fi + 1), outerDistance )
+
+                    innerAfter : ( Float, Float )
+                    innerAfter =
+                        fromPolar ( angle + fragmentAngle * (fi + 1), innerDistance )
+
+                    innerBefore : ( Float, Float )
+                    innerBefore =
+                        fromPolar ( angle + fragmentAngle * fi, innerDistance )
+                in
+                S.path
+                    [ SA.d <|
+                        Path.toString
+                            [ SubPath.fromSegments
+                                [ Segment.ellipticalArc outerBefore
+                                    { target = outerAfter
+                                    , radii = ( outerDistance, outerDistance )
+                                    , xAxisRotate = 0
+                                    , arcFlag = LowLevel.Command.largestArc
+                                    , direction = LowLevel.Command.clockwise
+                                    }
+                                ]
+                                |> SubPath.connect
+                                    (if innerDistance < segmentHeight / 2 then
+                                        SubPath.fromSegments
+                                            [ Segment.line innerBefore innerAfter
+                                            ]
+
+                                     else
+                                        SubPath.fromSegments
+                                            [ Segment.ellipticalArc innerAfter
+                                                { target = innerBefore
+                                                , radii = ( innerDistance, innerDistance )
+                                                , xAxisRotate = 0
+                                                , arcFlag = LowLevel.Command.largestArc
+                                                , direction = LowLevel.Command.counterClockwise
+                                                }
+                                            ]
+                                    )
+                            ]
+                    , SA.fill <| Paint <| Color.fromHsla moiety
+                    ]
+                    [ S.title [] [ Html.text <| String.join ", " usernames ] ]
+            )
+        |> S.g [ SA.id <| "angle-" ++ String.fromFloat angle ]
+
+
+toDistance : Hsla -> Float
+toDistance moiety =
+    quantize ringCount moiety.saturation
+
+
+toAngle : Hsla -> Float
+toAngle moiety =
+    2 * pi * quantize (angleCount - 1) moiety.hue * (angleCount - 1) / angleCount
 
 
 quantize : Float -> Float -> Float
@@ -358,6 +383,8 @@ quantize count value =
     (toFloat <| round <| count * value) / count
 
 
-angleCount : number
-angleCount =
-    40
+gatherEqualsBy : (a -> b) -> List a -> List ( b, List a )
+gatherEqualsBy f list =
+    list
+        |> List.Extra.gatherEqualsBy f
+        |> List.map (\( first, rest ) -> ( f first, first :: rest ))
