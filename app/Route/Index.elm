@@ -4,6 +4,7 @@ import AssocList
 import BackendTask exposing (BackendTask)
 import BackendTask.Http as BHttp
 import Color exposing (Color)
+import Color.Oklch exposing (Oklch)
 import Dict
 import FatalError exposing (FatalError)
 import Head
@@ -30,6 +31,52 @@ import UrlPath
 import View exposing (View)
 
 
+type alias Color =
+    Hsla
+
+
+currentSpace : ColorSpace Color
+currentSpace =
+    lch
+
+
+
+--
+
+
+type alias ColorSpace a =
+    { toColor : a -> Color.Color
+    , fromColor : Color.Color -> a
+    , distance : a -> Float
+    , angle : a -> Float
+    , sorting : ( a, List String ) -> ( Float, Float )
+    }
+
+
+oklch : ColorSpace Oklch
+oklch =
+    { toColor = Color.Oklch.toColor
+    , fromColor = Color.Oklch.fromColor
+    , distance = \{ chroma } -> logBase 2 (1 + chroma * (1 / 0.37))
+    , angle = .hue
+    , sorting = \( { lightness, hue }, _ ) -> ( hue, lightness )
+    }
+
+
+lch : ColorSpace Hsla
+lch =
+    { toColor = Color.fromHsla
+    , fromColor = Color.toHsla
+    , distance = \{ saturation } -> saturation
+    , angle = .hue
+    , sorting = \( { lightness, hue }, _ ) -> ( hue, lightness )
+    }
+
+
+
+--
+
+
 type alias Model =
     {}
 
@@ -43,7 +90,7 @@ type alias RouteParams =
 
 
 type alias Data =
-    { moieties : AssocList.Dict Hsla (List String)
+    { moieties : AssocList.Dict Color (List String)
     }
 
 
@@ -87,12 +134,13 @@ data =
                     List.foldl
                         (\( username, moiety ) acc ->
                             let
-                                hsla : Hsla
-                                hsla =
-                                    Color.toHsla <| rgbToColor moiety
+                                color : Color
+                                color =
+                                    rgbToColor moiety
+                                        |> currentSpace.fromColor
                             in
-                            AssocList.insert hsla
-                                (username :: Maybe.withDefault [] (AssocList.get hsla acc))
+                            AssocList.insert color
+                                (username :: Maybe.withDefault [] (AssocList.get color acc))
                                 acc
                         )
                         AssocList.empty
@@ -101,7 +149,7 @@ data =
             )
 
 
-rgbToColor : Int -> Color
+rgbToColor : Int -> Color.Color
 rgbToColor rgb =
     Color.rgb255 (rgb // 65536) (modBy 256 <| rgb // 256) (modBy 256 rgb)
 
@@ -262,7 +310,7 @@ view app _ =
     }
 
 
-viewGrayscale : ( Float, List ( Hsla, List String ) ) -> Svg (PagesMsg Msg)
+viewGrayscale : ( Float, List ( Color, List String ) ) -> Svg (PagesMsg Msg)
 viewGrayscale ( _, list ) =
     list
         |> List.map
@@ -272,7 +320,7 @@ viewGrayscale ( _, list ) =
                     , SAPx.y <| (2 - rectHeight - 2 * borderWidth) * quantize (rectCount - 1) moiety.lightness - 1 + segmentHeight / 20
                     , SAPx.width <| segmentHeight / 2 - segmentHeight / 6 - borderWidth
                     , SAPx.height rectHeight
-                    , SA.fill <| Paint <| Color.fromHsla moiety
+                    , SA.fill <| Paint <| currentSpace.toColor moiety
                     , SA.stroke <| Paint Color.black
                     , SAPx.strokeWidth borderWidth
                     ]
@@ -281,7 +329,7 @@ viewGrayscale ( _, list ) =
         |> S.g [ SA.id "grayscale" ]
 
 
-viewSegment : Float -> ( Float, List ( Hsla, List String ) ) -> Svg (PagesMsg Msg)
+viewSegment : Float -> ( Float, List ( Color, List String ) ) -> Svg (PagesMsg Msg)
 viewSegment distance ( angle, list ) =
     let
         outerDistance : Float
@@ -307,7 +355,7 @@ viewSegment distance ( angle, list ) =
             )
     in
     list
-        |> List.sortBy (\( { lightness, hue }, _ ) -> lightness + hue)
+        |> List.sortBy currentSpace.sorting
         |> List.indexedMap
             (\i ( moiety, usernames ) ->
                 let
@@ -361,21 +409,21 @@ viewSegment distance ( angle, list ) =
                                             ]
                                     )
                             ]
-                    , SA.fill <| Paint <| Color.fromHsla moiety
+                    , SA.fill <| Paint <| currentSpace.toColor moiety
                     ]
                     [ S.title [] [ Html.text <| String.join ", " usernames ] ]
             )
         |> S.g [ SA.id <| "angle-" ++ String.fromFloat angle ]
 
 
-toDistance : Hsla -> Float
+toDistance : Color -> Float
 toDistance moiety =
-    quantize ringCount moiety.saturation
+    quantize ringCount (currentSpace.distance moiety)
 
 
-toAngle : Hsla -> Float
+toAngle : Color -> Float
 toAngle moiety =
-    2 * pi * quantize (angleCount - 1) moiety.hue * (angleCount - 1) / angleCount
+    2 * pi * quantize (angleCount - 1) (currentSpace.angle moiety) * (angleCount - 1) / angleCount
 
 
 quantize : Float -> Float -> Float
