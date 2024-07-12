@@ -15,5 +15,5 @@
     "lamdera": "^0.19.1-1.2.1-1"
   },
   "license": "MIT",
-  "packageManager": "yarn@4.2.1"
+  "packageManager": "yarn@4.3.1"
 }
