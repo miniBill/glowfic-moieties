@@ -1664,6 +1664,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dir-glob@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "dir-glob@npm:3.0.1"
+  dependencies:
+    path-type: "npm:^4.0.0"
+  checksum: 10c0/dcac00920a4d503e38bb64001acb19df4efc14536ada475725e12f52c16777afdee4db827f55f13a908ee7efc0cb282e2e3dbaeeb98c0993dd93d1802d3bf00c
+  languageName: node
+  linkType: hard
+
 "duplexer3@npm:^0.1.4":
   version: 0.1.5
   resolution: "duplexer3@npm:0.1.5"
@@ -1759,16 +1768,16 @@ __metadata:
   dependencies:
     elm-json: "npm:^0.2.13"
     elm-optimize-level-2: "npm:^0.3.5"
-    elm-pages: "npm:^3.0.15"
-    elm-review: "npm:^2.10.3"
-    elm-tooling: "npm:^1.14.0"
+    elm-pages: "npm:^3.0.16"
+    elm-review: "npm:^2.12.0"
+    elm-tooling: "npm:^1.15.1"
     lamdera: "npm:^0.19.1-1.2.1-1"
   languageName: unknown
   linkType: soft
 
-"elm-pages@npm:^3.0.15":
-  version: 3.0.15
-  resolution: "elm-pages@npm:3.0.15"
+"elm-pages@npm:^3.0.16":
+  version: 3.0.16
+  resolution: "elm-pages@npm:3.0.16"
   dependencies:
     "@sindresorhus/merge-streams": "npm:^3.0.0"
     busboy: "npm:^1.6.0"
@@ -1796,13 +1805,13 @@ __metadata:
     which: "npm:^4.0.0"
   bin:
     elm-pages: generator/src/cli.js
-  checksum: 10c0/8e520b4ed6f3260ef7798b4655fd6fde9d62f19a4ff0ea5afb7eec4bccb8db08c7a1bbef6f2a818f354647d6e73aa98966ee7a01bb8f7ceb76afd255296325ae
+  checksum: 10c0/6b95ba977a17e66f99064378e50983c557112df1ed7ce4269e2cfc745da36bc03a428c22712814c5f1a33d72c1898d6f1dc3d91ee0d1ca554bc068ec53deee8e
   languageName: node
   linkType: hard
 
-"elm-review@npm:^2.10.3":
-  version: 2.11.2
-  resolution: "elm-review@npm:2.11.2"
+"elm-review@npm:^2.12.0":
+  version: 2.12.0
+  resolution: "elm-review@npm:2.12.0"
   dependencies:
     chalk: "npm:^4.0.0"
     chokidar: "npm:^3.5.2"
@@ -1812,7 +1821,8 @@ __metadata:
     find-up: "npm:^4.1.0"
     folder-hash: "npm:^3.3.0"
     fs-extra: "npm:^9.0.0"
-    glob: "npm:^7.1.4"
+    glob: "npm:^10.2.6"
+    globby: "npm:^13.2.2"
     got: "npm:^11.8.5"
     graceful-fs: "npm:^4.2.11"
     minimist: "npm:^1.2.6"
@@ -1826,7 +1836,7 @@ __metadata:
     wrap-ansi: "npm:^7.0.0"
   bin:
     elm-review: bin/elm-review
-  checksum: 10c0/29b50b6d766de82a6b908ad5a2307dfbcbadfc1c4cc6cb8b876bc803a154dfc1423ec498113b8c8d64a4b7b288009d9fbe8468d6f5b01b039efe4b4772468d0d
+  checksum: 10c0/f0f372b11aa6bda2da8ec26d28e710556082831b6d2306c18971d803138645e29d5de5552553179d131cb46b397d863916fcb435ca9804097aaae7a8e1308352
   languageName: node
   linkType: hard
 
@@ -1837,7 +1847,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"elm-tooling@npm:^1.14.0":
+"elm-tooling@npm:^1.15.1":
   version: 1.15.1
   resolution: "elm-tooling@npm:1.15.1"
   bin:
@@ -2200,7 +2210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.3.2":
+"fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -2504,7 +2514,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
+"glob@npm:^10.2.6":
+  version: 10.4.5
+  resolution: "glob@npm:10.4.5"
+  dependencies:
+    foreground-child: "npm:^3.1.0"
+    jackspeak: "npm:^3.1.2"
+    minimatch: "npm:^9.0.4"
+    minipass: "npm:^7.1.2"
+    package-json-from-dist: "npm:^1.0.0"
+    path-scurry: "npm:^1.11.1"
+  bin:
+    glob: dist/esm/bin.mjs
+  checksum: 10c0/19a9759ea77b8e3ca0a43c2f07ecddc2ad46216b786bb8f993c445aee80d345925a21e5280c7b7c6c59e860a0154b84e4b2b60321fea92cd3c56b4a7489f160e
+  languageName: node
+  linkType: hard
+
+"glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.6":
   version: 7.2.3
   resolution: "glob@npm:7.2.3"
   dependencies:
@@ -2529,6 +2555,19 @@ __metadata:
     slash: "npm:^5.1.0"
     unicorn-magic: "npm:^0.1.0"
   checksum: 10c0/6d98738a419f948ef23da019275b15ca5c65bb7e354ecea52a3015f4dae6b28a713fcf73bf3aab1c04039f4f62da71cff191a7ececc37c0e4c9b4320a047505f
+  languageName: node
+  linkType: hard
+
+"globby@npm:^13.2.2":
+  version: 13.2.2
+  resolution: "globby@npm:13.2.2"
+  dependencies:
+    dir-glob: "npm:^3.0.1"
+    fast-glob: "npm:^3.3.0"
+    ignore: "npm:^5.2.4"
+    merge2: "npm:^1.4.1"
+    slash: "npm:^4.0.0"
+  checksum: 10c0/a8d7cc7cbe5e1b2d0f81d467bbc5bc2eac35f74eaded3a6c85fc26d7acc8e6de22d396159db8a2fc340b8a342e74cac58de8f4aee74146d3d146921a76062664
   languageName: node
   linkType: hard
 
@@ -3256,7 +3295,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"merge2@npm:^1.3.0":
+"merge2@npm:^1.3.0, merge2@npm:^1.4.1":
   version: 1.4.1
   resolution: "merge2@npm:1.4.1"
   checksum: 10c0/254a8a4605b58f450308fc474c82ac9a094848081bf4c06778200207820e5193726dc563a0d2c16468810516a5c97d9d3ea0ca6585d23c58ccfff2403e8dbbeb
@@ -3704,6 +3743,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"package-json-from-dist@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "package-json-from-dist@npm:1.0.0"
+  checksum: 10c0/e3ffaf6ac1040ab6082a658230c041ad14e72fabe99076a2081bb1d5d41210f11872403fc09082daf4387fc0baa6577f96c9c0e94c90c394fd57794b66aa4033
+  languageName: node
+  linkType: hard
+
 "package-json@npm:^6.3.0":
   version: 6.5.0
   resolution: "package-json@npm:6.5.0"
@@ -3775,6 +3821,13 @@ __metadata:
   version: 0.1.7
   resolution: "path-to-regexp@npm:0.1.7"
   checksum: 10c0/50a1ddb1af41a9e68bd67ca8e331a705899d16fb720a1ea3a41e310480948387daf603abb14d7b0826c58f10146d49050a1291ba6a82b78a382d1c02c0b8f905
+  languageName: node
+  linkType: hard
+
+"path-type@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "path-type@npm:4.0.0"
+  checksum: 10c0/666f6973f332f27581371efaf303fd6c272cc43c2057b37aa99e3643158c7e4b2626549555d88626e99ea9e046f82f32e41bbde5f1508547e9a11b149b52387c
   languageName: node
   linkType: hard
 
@@ -4392,6 +4445,13 @@ __metadata:
   version: 1.0.5
   resolution: "sisteransi@npm:1.0.5"
   checksum: 10c0/230ac975cca485b7f6fe2b96a711aa62a6a26ead3e6fb8ba17c5a00d61b8bed0d7adc21f5626b70d7c33c62ff4e63933017a6462942c719d1980bb0b1207ad46
+  languageName: node
+  linkType: hard
+
+"slash@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "slash@npm:4.0.0"
+  checksum: 10c0/b522ca75d80d107fd30d29df0549a7b2537c83c4c4ecd12cd7d4ea6c8aaca2ab17ada002e7a1d78a9d736a0261509f26ea5b489082ee443a3a810586ef8eff18
   languageName: node
   linkType: hard
 
