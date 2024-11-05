@@ -425,37 +425,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lamdera/compiler-darwin-arm64@npm:0.19.1-1.2.1":
-  version: 0.19.1-1.2.1
-  resolution: "@lamdera/compiler-darwin-arm64@npm:0.19.1-1.2.1"
+"@lamdera/compiler-darwin-arm64@npm:0.19.1-1.3.2":
+  version: 0.19.1-1.3.2
+  resolution: "@lamdera/compiler-darwin-arm64@npm:0.19.1-1.3.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@lamdera/compiler-darwin-x64@npm:0.19.1-1.2.1":
-  version: 0.19.1-1.2.1
-  resolution: "@lamdera/compiler-darwin-x64@npm:0.19.1-1.2.1"
+"@lamdera/compiler-darwin-x64@npm:0.19.1-1.3.2":
+  version: 0.19.1-1.3.2
+  resolution: "@lamdera/compiler-darwin-x64@npm:0.19.1-1.3.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@lamdera/compiler-linux-arm64@npm:0.19.1-1.2.1":
-  version: 0.19.1-1.2.1
-  resolution: "@lamdera/compiler-linux-arm64@npm:0.19.1-1.2.1"
+"@lamdera/compiler-linux-arm64@npm:0.19.1-1.3.2":
+  version: 0.19.1-1.3.2
+  resolution: "@lamdera/compiler-linux-arm64@npm:0.19.1-1.3.2"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@lamdera/compiler-linux-x64@npm:0.19.1-1.2.1":
-  version: 0.19.1-1.2.1
-  resolution: "@lamdera/compiler-linux-x64@npm:0.19.1-1.2.1"
+"@lamdera/compiler-linux-x64@npm:0.19.1-1.3.2":
+  version: 0.19.1-1.3.2
+  resolution: "@lamdera/compiler-linux-x64@npm:0.19.1-1.3.2"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@lamdera/compiler-win32-x64@npm:0.19.1-1.2.1":
-  version: 0.19.1-1.2.1
-  resolution: "@lamdera/compiler-win32-x64@npm:0.19.1-1.2.1"
+"@lamdera/compiler-win32-x64@npm:0.19.1-1.3.2":
+  version: 0.19.1-1.3.2
+  resolution: "@lamdera/compiler-win32-x64@npm:0.19.1-1.3.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -1611,7 +1611,7 @@ __metadata:
     elm-pages: "npm:^3.0.16"
     elm-review: "npm:^2.12.0"
     elm-tooling: "npm:^1.15.1"
-    lamdera: "npm:^0.19.1-1.2.1-1"
+    lamdera: "npm:^0.19.1-1.3.2"
   languageName: unknown
   linkType: soft
 
@@ -2855,15 +2855,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lamdera@npm:^0.19.1-1.2.1-1":
-  version: 0.19.1-1.2.1-1
-  resolution: "lamdera@npm:0.19.1-1.2.1-1"
+"lamdera@npm:^0.19.1-1.3.2":
+  version: 0.19.1-1.3.2
+  resolution: "lamdera@npm:0.19.1-1.3.2"
   dependencies:
-    "@lamdera/compiler-darwin-arm64": "npm:0.19.1-1.2.1"
-    "@lamdera/compiler-darwin-x64": "npm:0.19.1-1.2.1"
-    "@lamdera/compiler-linux-arm64": "npm:0.19.1-1.2.1"
-    "@lamdera/compiler-linux-x64": "npm:0.19.1-1.2.1"
-    "@lamdera/compiler-win32-x64": "npm:0.19.1-1.2.1"
+    "@lamdera/compiler-darwin-arm64": "npm:0.19.1-1.3.2"
+    "@lamdera/compiler-darwin-x64": "npm:0.19.1-1.3.2"
+    "@lamdera/compiler-linux-arm64": "npm:0.19.1-1.3.2"
+    "@lamdera/compiler-linux-x64": "npm:0.19.1-1.3.2"
+    "@lamdera/compiler-win32-x64": "npm:0.19.1-1.3.2"
   dependenciesMeta:
     "@lamdera/compiler-darwin-arm64":
       optional: true
@@ -2877,7 +2877,7 @@ __metadata:
       optional: true
   bin:
     lamdera: bin/lamdera
-  checksum: 10c0/cf278c3ee986b7334bb59701c17aa51a1ae8fd6030e3057ad2531bc20519b0d1dc5336f7afa7133ce939e79f71bcd4024ae1bb05c87305e5578d28f1e45b3873
+  checksum: 10c0/eedb565a9ff216552394942f4470823a010cb24d04c8327cb7f072e077e3cef2e78ace5243daef896bb043b47f05e02e20fe3011064907cea681a67a27705c31
   languageName: node
   linkType: hard
 
