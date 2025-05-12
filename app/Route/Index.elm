@@ -1,6 +1,5 @@
 module Route.Index exposing (ActionData, Data, Hsla, Model, Msg, RouteParams, route)
 
-import AssocList
 import BackendTask exposing (BackendTask)
 import BackendTask.Http as BHttp
 import Color exposing (Color)
@@ -22,6 +21,7 @@ import PagesMsg exposing (PagesMsg)
 import Path
 import RouteBuilder exposing (App, StatefulRoute)
 import Segment
+import SeqDict exposing (SeqDict)
 import Shared
 import SubPath
 import TypedSvg as S
@@ -100,7 +100,7 @@ type alias RouteParams =
 
 
 type alias Data =
-    { moieties : AssocList.Dict Color (List String)
+    { moieties : SeqDict Color (List String)
     }
 
 
@@ -165,11 +165,11 @@ data =
                                 color =
                                     rgbToColor moiety
                             in
-                            AssocList.insert color
-                                (username :: Maybe.withDefault [] (AssocList.get color acc))
+                            SeqDict.insert color
+                                (username :: Maybe.withDefault [] (SeqDict.get color acc))
                                 acc
                         )
-                        AssocList.empty
+                        SeqDict.empty
                         moieties
                 }
             )
@@ -311,7 +311,7 @@ view app _ model =
     { title = "Moieties"
     , body =
         [ app.data.moieties
-            |> AssocList.toList
+            |> SeqDict.toList
             |> gatherEqualsBy (\( moiety, _ ) -> toDistance model.colorSpace moiety)
             |> List.sortBy Tuple.first
             |> List.map
