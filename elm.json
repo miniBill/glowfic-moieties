@@ -10,7 +10,7 @@
         "direct": {
             "avh4/elm-color": "1.0.0",
             "dillonkearns/elm-form": "3.0.1",
-            "dillonkearns/elm-pages": "10.1.0",
+            "dillonkearns/elm-pages": "10.2.1",
             "elm/browser": "1.0.2",
             "elm/bytes": "1.0.8",
             "elm/core": "1.0.5",
@@ -22,6 +22,8 @@
             "elm-community/list-extra": "8.7.0",
             "elm-community/typed-svg": "7.0.0",
             "folkertdev/one-true-path-experiment": "6.0.1",
+            "lamdera/codecs": "1.0.0",
+            "lamdera/containers": "1.0.0",
             "miniBill/elm-oklch": "1.0.0",
             "pzp1997/assoc-list": "1.0.0",
             "rtfeldman/elm-hex": "1.0.0"
@@ -53,7 +55,7 @@
             "ianmackenzie/elm-units-interval": "3.2.0",
             "jluckyiv/elm-utc-date-strings": "1.0.0",
             "justinmimbs/date": "4.1.0",
-            "mdgriffith/elm-codegen": "4.2.2",
+            "mdgriffith/elm-codegen": "5.2.0",
             "miniBill/elm-codec": "2.2.0",
             "miniBill/elm-unicode": "1.1.1",
             "noahzgordon/elm-color-extra": "1.0.2",
@@ -61,11 +63,11 @@
             "robinheghan/murmur3": "1.0.0",
             "rtfeldman/elm-css": "18.0.0",
             "rtfeldman/elm-iso8601-date-strings": "1.1.4",
-            "stil4m/elm-syntax": "7.3.7",
+            "stil4m/elm-syntax": "7.3.8",
             "stil4m/structured-writer": "1.0.3",
-            "the-sett/elm-pretty-printer": "3.1.0",
+            "the-sett/elm-pretty-printer": "3.1.1",
             "the-sett/elm-syntax-dsl": "6.0.3",
-            "vito/elm-ansi": "10.0.1"
+            "wolfadex/elm-ansi": "3.0.0"
         }
     },
     "test-dependencies": {
