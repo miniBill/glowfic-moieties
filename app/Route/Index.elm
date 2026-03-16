@@ -1,4 +1,4 @@
-module Route.Index exposing (ActionData, Data, Hsla, Model, Msg, RouteParams, route)
+module Route.Index exposing (ActionData, ColorSpace, Data, Model, Msg, RouteParams, route)
 
 import BackendTask exposing (BackendTask)
 import BackendTask.Http as BHttp
@@ -101,14 +101,6 @@ type alias RouteParams =
 
 type alias Data =
     { moieties : SeqDict Color (List String)
-    }
-
-
-type alias Hsla =
-    { hue : Float
-    , saturation : Float
-    , lightness : Float
-    , alpha : Float
     }
 
 
@@ -218,6 +210,7 @@ getAllPages api decoder =
                         of
                             [ last ] ->
                                 let
+                                    sliced : String
                                     sliced =
                                         String.slice
                                             (String.length lastLinkPrefix)

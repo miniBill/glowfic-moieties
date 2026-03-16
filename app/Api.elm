@@ -11,5 +11,5 @@ routes :
     BackendTask FatalError (List Route)
     -> (Maybe { indent : Int, newLines : Bool } -> Html Never -> String)
     -> List (ApiRoute ApiRoute.Response)
-routes getStaticRoutes htmlToString =
+routes {- getStaticRoutes -} _ {- htmlToString -} _ =
     []

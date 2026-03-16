@@ -1,5 +1,5 @@
 module Effect exposing
-    ( Effect(..), batch, fromCmd, map, none, perform
+    ( Effect, batch, fromCmd, map, none, perform
     , FormData
     )
 

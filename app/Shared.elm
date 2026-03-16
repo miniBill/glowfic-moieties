@@ -1,4 +1,4 @@
-module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
+module Shared exposing (Data, Model, Msg, template)
 
 import BackendTask exposing (BackendTask)
 import Effect exposing (Effect)
@@ -24,15 +24,11 @@ template =
 
 
 type Msg
-    = SharedMsg SharedMsg
+    = NoOp
 
 
 type alias Data =
     ()
-
-
-type SharedMsg
-    = NoOp
 
 
 type alias Model =
@@ -61,7 +57,7 @@ init _ _ =
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
-        SharedMsg _ ->
+        NoOp ->
             ( model, Effect.none )
 
 

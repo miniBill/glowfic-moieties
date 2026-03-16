@@ -5,11 +5,11 @@
     "": {
       "name": "elm-pages-app",
       "devDependencies": {
-        "elm-optimize-level-2": "latest",
-        "elm-pages": "latest",
-        "elm-review": "latest",
-        "elm-tooling": "latest",
-        "lamdera": "latest",
+        "elm-optimize-level-2": "^0.3.5",
+        "elm-pages": "^3.0.27",
+        "elm-review": "^2.13.5",
+        "elm-tooling": "^1.17.0",
+        "lamdera": "^0.19.1-1.4.0",
       },
     },
   },
