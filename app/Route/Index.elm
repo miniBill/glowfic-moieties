@@ -162,14 +162,9 @@ data =
                                 acc
                         )
                         SeqDict.empty
-                        (miniBill :: moieties)
+                        moieties
                 }
             )
-
-
-miniBill : ( String, Int )
-miniBill =
-    ( "miniBill", 0x00DCD0FF )
 
 
 rgbToColor : Int -> Color.Color
